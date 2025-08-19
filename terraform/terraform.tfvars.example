@@ -50,8 +50,11 @@ grafana_replicas = 1
 # Number of AlertManager replicas
 alertmanager_replicas = 1
 
-# Number of cert-manager replicas
-cert_manager_replicas = 1
+# Cert-manager configuration
+cert_manager_version = "1.13.2"
+cert_issuer_staging = "letsencrypt-staging"
+cert_issuer_prod = "letsencrypt-prod"
+ingress_class = "nginx"
 
 # =============================================================================
 # COMPONENT ENABLEMENT

@@ -27,8 +27,13 @@ module "cert_manager" {
   count  = var.enable_ssl ? 1 : 0
   source = "./modules/cert-manager"
   
-  replica_count = var.cert_manager_replicas
+  cert_manager_version = var.cert_manager_version
   letsencrypt_email = var.letsencrypt_email
+  cert_issuer_staging = var.cert_issuer_staging
+  cert_issuer_prod = var.cert_issuer_prod
+  ingress_class = var.ingress_class
+  enable_monitoring = var.enable_monitoring
+  node_selector = var.node_selector
   
   depends_on = [module.nginx_ingress]
   

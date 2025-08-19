@@ -9,6 +9,11 @@ curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 sudo apt-get update && sudo apt-get install terraform
 
+# Install kubectl (required for kubectl provider)
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+
 # Install kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
@@ -197,7 +202,11 @@ If you encounter errors like "No matches for kind 'ClusterIssuer' in 'certmanage
    ```bash
    kubectl get deployment cert-manager -n cert-manager -o jsonpath='{.spec.template.spec.containers[0].image}'
    ```
-5. **If issues persist, re-run terraform apply** after a few minutes
+5. **Verify kubectl provider is working**:
+   ```bash
+   kubectl get clusterissuers
+   ```
+6. **If issues persist, re-run terraform apply** after a few minutes
 
 #### 1. Pods Not Starting
 ```bash

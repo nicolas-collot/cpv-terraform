@@ -5,10 +5,15 @@ output "namespace" {
 
 output "cluster_issuer_prod" {
   description = "Production ClusterIssuer name"
-  value       = kubernetes_manifest.letsencrypt_issuer.manifest.metadata.name
+  value       = var.cert_issuer_prod
 }
 
 output "cluster_issuer_staging" {
   description = "Staging ClusterIssuer name"
-  value       = kubernetes_manifest.letsencrypt_staging_issuer.manifest.metadata.name
+  value       = var.cert_issuer_staging
+}
+
+output "cert_manager_version" {
+  description = "Installed cert-manager version"
+  value       = var.cert_manager_version
 }
