@@ -193,7 +193,11 @@ If you encounter errors like "No matches for kind 'ClusterIssuer' in 'certmanage
    ```bash
    kubectl get crd | grep cert-manager
    ```
-4. **If issues persist, re-run terraform apply** after a few minutes
+4. **Check cert-manager version compatibility** (using v1.13.2):
+   ```bash
+   kubectl get deployment cert-manager -n cert-manager -o jsonpath='{.spec.template.spec.containers[0].image}'
+   ```
+5. **If issues persist, re-run terraform apply** after a few minutes
 
 #### 1. Pods Not Starting
 ```bash
