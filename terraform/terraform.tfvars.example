@@ -1,0 +1,148 @@
+# =============================================================================
+# camps.ch Infrastructure Configuration
+# =============================================================================
+# Copy this file to terraform.tfvars and update with your actual values
+# =============================================================================
+
+# =============================================================================
+# CLUSTER CONFIGURATION
+# =============================================================================
+
+# Kubernetes cluster configuration
+cluster_name = "camps-shared-cluster"
+
+# Path to your kubeconfig file (download from Infomaniak)
+kubeconfig_path = "~/.kube/config-camps"
+
+# Environment name
+environment = "production"
+
+# =============================================================================
+# STORAGE CONFIGURATION
+# =============================================================================
+
+# Number of replicas for Longhorn storage (1 for UAT, 2-3 for production)
+longhorn_replica_count = 1
+
+# =============================================================================
+# INGRESS CONFIGURATION
+# =============================================================================
+
+# Number of Nginx Ingress replicas
+nginx_ingress_replicas = 1
+
+# Maximum replicas for auto-scaling
+nginx_ingress_max_replicas = 5
+
+# Enable auto-scaling for Nginx Ingress
+nginx_ingress_enable_autoscaling = false
+
+# =============================================================================
+# MONITORING REPLICAS
+# =============================================================================
+
+# Number of Prometheus replicas
+prometheus_replicas = 1
+
+# Number of Grafana replicas
+grafana_replicas = 1
+
+# Number of AlertManager replicas
+alertmanager_replicas = 1
+
+# Number of cert-manager replicas
+cert_manager_replicas = 1
+
+# =============================================================================
+# COMPONENT ENABLEMENT
+# =============================================================================
+
+# Enable/disable components
+enable_storage = true
+enable_ingress = true
+enable_ssl = true
+enable_monitoring = true
+
+# =============================================================================
+# DOMAIN & SSL CONFIGURATION
+# =============================================================================
+
+# Application domain
+application_domain = "camps.ch"
+
+# Monitoring domain
+monitoring_domain = "monitoring.camps.ch"
+
+# Email for Let's Encrypt SSL certificates
+letsencrypt_email = "admin@camps.ch"
+
+# =============================================================================
+# MONITORING CONFIGURATION
+# =============================================================================
+
+# Grafana admin password (CHANGE THIS!)
+grafana_admin_password = "CHANGE_ME_STRONG_PASSWORD"
+
+# Prometheus storage size
+prometheus_storage_size = "20Gi"
+
+# Grafana storage size
+grafana_storage_size = "5Gi"
+
+# AlertManager storage size
+alertmanager_storage_size = "5Gi"
+
+# =============================================================================
+# RESOURCE LIMITS (MINIMAL - UAT READY)
+# =============================================================================
+
+# Nginx Ingress resources
+nginx_ingress_cpu_limit = "500m"
+nginx_ingress_memory_limit = "512Mi"
+nginx_ingress_cpu_request = "100m"
+nginx_ingress_memory_request = "128Mi"
+
+# Prometheus resources
+prometheus_cpu_limit = "500m"
+prometheus_memory_limit = "1Gi"
+prometheus_cpu_request = "250m"
+prometheus_memory_request = "512Mi"
+
+# Grafana resources
+grafana_cpu_limit = "500m"
+grafana_memory_limit = "512Mi"
+grafana_cpu_request = "100m"
+grafana_memory_request = "128Mi"
+
+# AlertManager resources
+alertmanager_cpu_limit = "100m"
+alertmanager_memory_limit = "128Mi"
+alertmanager_cpu_request = "50m"
+alertmanager_memory_request = "64Mi"
+
+# =============================================================================
+# RESOURCE TAGS
+# =============================================================================
+
+# Common tags for all resources
+common_tags = {
+  Project     = "camps-ch"
+  Environment = "production"
+  ManagedBy   = "terraform"
+  CostCenter  = "infrastructure"
+  Owner       = "devops-team"
+}
+
+# =============================================================================
+# NOTES
+# =============================================================================
+# 
+# 1. Make sure to change grafana_admin_password to a strong password
+# 2. Update letsencrypt_email with a valid email address
+# 3. Verify your application_domain and monitoring_domain are correct
+# 4. Ensure kubeconfig_path points to your Infomaniak kubeconfig file
+# 5. This configuration is set for minimal resources (UAT ready)
+# 6. For production, increase replica counts and resource limits
+# 7. Adjust storage sizes based on your monitoring retention needs
+#
+# =============================================================================
