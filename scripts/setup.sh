@@ -52,14 +52,14 @@ setup_environment() {
     log_info "Setting up environment..."
     
     # Check if kubeconfig exists
-    if [ ! -f "$HOME/.kube/config-camps" ]; then
-        log_error "Kubeconfig not found at $HOME/.kube/config-camps"
-        log_info "Please download kubeconfig from Infomaniak and place it at $HOME/.kube/config-camps"
+    if [ ! -f "$HOME/.kube/config-pergament" ]; then
+        log_error "Kubeconfig not found at $HOME/.kube/config-pergament"
+        log_info "Please download kubeconfig from Infomaniak and place it at $HOME/.kube/config-pergament"
         exit 1
     fi
     
     # Set KUBECONFIG
-    export KUBECONFIG="$HOME/.kube/config-camps"
+    export KUBECONFIG="$HOME/.kube/config-pergament"
     
     # Test kubectl connectivity
     if ! kubectl cluster-info &> /dev/null; then

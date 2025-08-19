@@ -24,11 +24,11 @@ sudo apt-get update && sudo apt-get install helm
    - Go to manager.infomaniak.com
    - Cloud → Kubernetes → camps-shared-cluster
    - "Accès" → "Télécharger kubeconfig"
-   - Save as `~/.kube/config-camps`
+   - Save as `~/.kube/config-pergament`
 
 2. **Test connectivity**:
    ```bash
-   export KUBECONFIG=~/.kube/config-camps
+   export KUBECONFIG=~/.kube/config-pergament
    kubectl cluster-info
    ```
 

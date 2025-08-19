@@ -17,7 +17,7 @@ module "nginx_ingress" {
   max_replicas  = var.nginx_ingress_max_replicas
   enable_autoscaling = var.nginx_ingress_enable_autoscaling
   
-  depends_on = var.enable_storage ? [module.longhorn[0]] : []
+  depends_on = [module.longhorn]
   
   tags = var.common_tags
 }
@@ -30,7 +30,7 @@ module "cert_manager" {
   replica_count = var.cert_manager_replicas
   letsencrypt_email = var.letsencrypt_email
   
-  depends_on = var.enable_ingress ? [module.nginx_ingress[0]] : []
+  depends_on = [module.nginx_ingress]
   
   tags = var.common_tags
 }
@@ -48,10 +48,10 @@ module "prometheus" {
   grafana_replicas       = var.grafana_replicas
   alertmanager_replicas  = var.alertmanager_replicas
   
-  depends_on = concat(
-    var.enable_storage ? [module.longhorn[0]] : [],
-    var.enable_ssl ? [module.cert_manager[0]] : []
-  )
+  depends_on = [
+    module.longhorn,
+    module.cert_manager
+  ]
   
   tags = var.common_tags
 }

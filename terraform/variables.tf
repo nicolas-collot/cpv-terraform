@@ -2,7 +2,7 @@
 variable "kubeconfig_path" {
   description = "Path to kubeconfig file"
   type        = string
-  default     = "~/.kube/config-camps"
+  default     = "~/.kube/config-pergament"
 }
 
 variable "cluster_name" {

@@ -54,7 +54,7 @@ validate_deployment() {
     log_info "Validating deployment..."
     
     # Set KUBECONFIG
-    export KUBECONFIG="$HOME/.kube/config-camps"
+    export KUBECONFIG="$HOME/.kube/config-pergament"
     
     # Check if all pods are running
     local namespaces=("longhorn-system" "ingress-nginx" "cert-manager" "monitoring" "production")

@@ -27,7 +27,7 @@ sudo apt-get update && sudo apt-get install terraform kubectl helm
 ### Configuration
 ```bash
 # 1. Set kubeconfig
-export KUBECONFIG=~/.kube/config-camps
+export KUBECONFIG=~/.kube/config-pergament
 
 # 2. Copy and edit configuration
 cp terraform/terraform.tfvars.example terraform/terraform.tfvars

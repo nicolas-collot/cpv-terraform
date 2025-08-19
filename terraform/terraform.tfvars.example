@@ -12,7 +12,7 @@
 cluster_name = "camps-shared-cluster"
 
 # Path to your kubeconfig file (download from Infomaniak)
-kubeconfig_path = "~/.kube/config-camps"
+kubeconfig_path = "~/.kube/config-pergament"
 
 # Environment name
 environment = "production"
