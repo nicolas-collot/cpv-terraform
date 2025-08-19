@@ -5,12 +5,12 @@ output "namespace" {
 
 output "cluster_issuer_prod" {
   description = "Production ClusterIssuer name"
-  value       = var.cert_issuer_prod
+  value       = "letsencrypt-prod"
 }
 
 output "cluster_issuer_staging" {
   description = "Staging ClusterIssuer name"
-  value       = var.cert_issuer_staging
+  value       = "letsencrypt-staging"
 }
 
 output "cert_manager_version" {

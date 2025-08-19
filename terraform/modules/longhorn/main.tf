@@ -1,5 +1,5 @@
-# Longhorn Storage System
-resource "kubernetes_namespace" "longhorn_system" {
+# Longhorn storage system
+resource "kubernetes_namespace" "longhorn" {
   metadata {
     name = "longhorn-system"
     labels = {
@@ -12,107 +12,42 @@ resource "helm_release" "longhorn" {
   name       = "longhorn"
   repository = "https://charts.longhorn.io"
   chart      = "longhorn"
-  version    = "1.5.3"
-  namespace  = kubernetes_namespace.longhorn_system.metadata[0].name
+  version    = "1.6.0"
+  namespace  = kubernetes_namespace.longhorn.metadata[0].name
   
   timeout = 600
   
   values = [
     yamlencode({
       defaultSettings = {
-        defaultReplicaCount = var.replica_count
-        storageMinimalAvailablePercentage = 10
-        backupTarget = ""
-        backupTargetCredentialSecret = ""
-        allowRecurringJobWhileVolumeDetached = true
-        createDefaultDiskLabeledNodes = true
-        defaultDataPath = "/var/lib/longhorn/"
-        replicaSoftAntiAffinity = false
-        storageOverProvisioningPercentage = 100
-        storageMinimalAvailablePercentage = 25
-        upgradeChecker = true
-        defaultReplicaCount = var.replica_count
-        guaranteedEngineManagerCPU = 12
-        guaranteedReplicaManagerCPU = 12
-        kubernetesClusterAutoscalerEnabled = false
-        orphanAutoDeletion = true
-        storageNetwork = ""
+        defaultReplicaCount = 1
       }
       
       persistence = {
         defaultClass = true
-        defaultFsType = "ext4"
-        defaultClassReplicaCount = var.replica_count
-        defaultDataLocality = "disabled"
-        reclaimPolicy = "Delete"
-        migratable = false
-        recurringJobSelector = {
-          enable = false
-          jobList = []
-        }
-        backingImage = {
-          enable = false
-          name = ""
-          dataSourceType = ""
-          dataSourceParameters = ""
-          expectedChecksum = ""
-        }
-        defaultNodeSelector = {
-          enable = false
-          selector = ""
-        }
+        defaultClassReplicaCount = 1
       }
       
       csi = {
-        kubeletRootDir = "~"
-        attacherReplicaCount = var.replica_count
-        provisionerReplicaCount = var.replica_count
-        resizerReplicaCount = var.replica_count
-        snapshotterReplicaCount = var.replica_count
+        kubeletRootDir = "/var/lib/kubelet"
+        attacherReplicaCount = 1
+        provisionerReplicaCount = 1
+        resizerReplicaCount = 1
+        snapshotterReplicaCount = 1
       }
       
-      longhornManager = {
-        priorityClass = ""
-        tolerations = []
-        nodeSelector = {}
-        serviceAnnotations = {}
-      }
-      
-      longhornDriver = {
-        priorityClass = ""
-        tolerations = []
-        nodeSelector = {}
-      }
-      
-      longhornUI = {
-        replicas = 1
-        priorityClass = ""
-        tolerations = []
-        nodeSelector = {}
-      }
-      
-      ingress = {
-        enabled = false
-      }
-      
-      service = {
-        ui = {
-          type = "ClusterIP"
-          nodePort = ""
+      resources = {
+        limits = {
+          cpu = "100m"
+          memory = "128Mi"
         }
-        manager = {
-          type = "ClusterIP"
-          nodePort = ""
+        requests = {
+          cpu = "50m"
+          memory = "64Mi"
         }
       }
     })
   ]
   
-  depends_on = [kubernetes_namespace.longhorn_system]
-}
-
-# Wait for Longhorn to be ready
-resource "time_sleep" "wait_for_longhorn" {
-  depends_on = [helm_release.longhorn]
-  create_duration = "60s"
+  depends_on = [kubernetes_namespace.longhorn]
 }

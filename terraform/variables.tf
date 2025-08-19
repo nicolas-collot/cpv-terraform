@@ -1,4 +1,4 @@
-# Global variables
+# Essential configuration
 variable "kubeconfig_path" {
   description = "Path to kubeconfig file"
   type        = string
@@ -11,248 +11,46 @@ variable "cluster_name" {
   default     = "camps-shared-cluster"
 }
 
-# Domain variables for each service
-variable "monitoring_domain" {
-  description = "Domain for monitoring services (Grafana, Prometheus)"
-  type        = string
-  default     = "monitoring.camps.ch"
-}
-
-variable "application_domain" {
-  description = "Domain for main application"
-  type        = string
-  default     = "camps.ch"
-}
-
 variable "environment" {
   description = "Environment name"
   type        = string
   default     = "production"
 }
 
-# Storage variables
-variable "longhorn_replica_count" {
-  description = "Number of replicas for Longhorn storage"
-  type        = number
-  default     = 1
-}
-
-# Ingress variables
-variable "nginx_ingress_replicas" {
-  description = "Number of Nginx Ingress replicas"
-  type        = number
-  default     = 1
-}
-
-variable "nginx_ingress_max_replicas" {
-  description = "Maximum number of Nginx Ingress replicas for auto-scaling"
-  type        = number
-  default     = 5
-}
-
-variable "nginx_ingress_enable_autoscaling" {
-  description = "Enable auto-scaling for Nginx Ingress"
-  type        = bool
-  default     = false
-}
-
-# Monitoring variables
-variable "prometheus_replicas" {
-  description = "Number of Prometheus replicas"
-  type        = number
-  default     = 1
-}
-
-variable "grafana_replicas" {
-  description = "Number of Grafana replicas"
-  type        = number
-  default     = 1
-}
-
-variable "alertmanager_replicas" {
-  description = "Number of AlertManager replicas"
-  type        = number
-  default     = 1
-}
-
-variable "cert_manager_version" {
-  description = "Cert-manager Helm chart version"
+# Domain configuration
+variable "application_domain" {
+  description = "Application domain"
   type        = string
-  default     = "1.13.2"
+  default     = "camps.ch"
 }
 
-variable "cert_issuer_staging" {
-  description = "Name for Let's Encrypt staging ClusterIssuer"
+variable "monitoring_domain" {
+  description = "Monitoring domain"
   type        = string
-  default     = "letsencrypt-staging"
+  default     = "monitoring.camps.ch"
 }
 
-variable "cert_issuer_prod" {
-  description = "Name for Let's Encrypt production ClusterIssuer"
-  type        = string
-  default     = "letsencrypt-prod"
-}
-
-variable "ingress_class" {
-  description = "Ingress class for cert-manager HTTP01 challenges"
-  type        = string
-  default     = "nginx"
-}
-
-variable "node_selector" {
-  description = "Node selector for cert-manager pods"
-  type        = map(string)
-  default     = null
-}
-
-# Resource customization
-variable "enable_monitoring" {
-  description = "Enable monitoring stack (Prometheus, Grafana, AlertManager)"
-  type        = bool
-  default     = true
-}
-
-variable "enable_ingress" {
-  description = "Enable Nginx Ingress Controller"
-  type        = bool
-  default     = true
-}
-
-variable "enable_storage" {
-  description = "Enable Longhorn storage"
-  type        = bool
-  default     = true
-}
-
-variable "enable_ssl" {
-  description = "Enable cert-manager for SSL certificates"
-  type        = bool
-  default     = true
-}
-
-# Resource customization - CPU and Memory
-variable "nginx_ingress_cpu_limit" {
-  description = "Nginx Ingress CPU limit"
-  type        = string
-  default     = "500m"
-}
-
-variable "nginx_ingress_memory_limit" {
-  description = "Nginx Ingress memory limit"
-  type        = string
-  default     = "512Mi"
-}
-
-variable "nginx_ingress_cpu_request" {
-  description = "Nginx Ingress CPU request"
-  type        = string
-  default     = "100m"
-}
-
-variable "nginx_ingress_memory_request" {
-  description = "Nginx Ingress memory request"
-  type        = string
-  default     = "128Mi"
-}
-
-variable "prometheus_cpu_limit" {
-  description = "Prometheus CPU limit"
-  type        = string
-  default     = "500m"
-}
-
-variable "prometheus_memory_limit" {
-  description = "Prometheus memory limit"
-  type        = string
-  default     = "1Gi"
-}
-
-variable "prometheus_cpu_request" {
-  description = "Prometheus CPU request"
-  type        = string
-  default     = "250m"
-}
-
-variable "prometheus_memory_request" {
-  description = "Prometheus memory request"
-  type        = string
-  default     = "512Mi"
-}
-
-variable "grafana_cpu_limit" {
-  description = "Grafana CPU limit"
-  type        = string
-  default     = "500m"
-}
-
-variable "grafana_memory_limit" {
-  description = "Grafana memory limit"
-  type        = string
-  default     = "512Mi"
-}
-
-variable "grafana_cpu_request" {
-  description = "Grafana CPU request"
-  type        = string
-  default     = "100m"
-}
-
-variable "grafana_memory_request" {
-  description = "Grafana memory request"
-  type        = string
-  default     = "128Mi"
-}
-
-variable "alertmanager_cpu_limit" {
-  description = "AlertManager CPU limit"
-  type        = string
-  default     = "100m"
-}
-
-variable "alertmanager_memory_limit" {
-  description = "AlertManager memory limit"
-  type        = string
-  default     = "128Mi"
-}
-
-variable "alertmanager_cpu_request" {
-  description = "AlertManager CPU request"
-  type        = string
-  default     = "50m"
-}
-
-variable "alertmanager_memory_request" {
-  description = "AlertManager memory request"
-  type        = string
-  default     = "64Mi"
-}
-
-# Monitoring variables
-variable "prometheus_storage_size" {
-  description = "Prometheus storage size"
-  type        = string
-  default     = "20Gi"
-}
-
-variable "grafana_admin_password" {
-  description = "Grafana admin password"
-  type        = string
-  sensitive   = true
-}
-
-# SSL variables
+# SSL configuration
 variable "letsencrypt_email" {
   description = "Email for Let's Encrypt certificates"
   type        = string
+  default     = "admin@camps.ch"
 }
 
-# Tags
+# Monitoring configuration
+variable "grafana_admin_password" {
+  description = "Grafana admin password"
+  type        = string
+  default     = "admin123"
+}
+
+# Common tags
 variable "common_tags" {
   description = "Common tags for all resources"
   type        = map(string)
   default = {
     Project     = "camps-ch"
-    ManagedBy   = "terraform"
     Environment = "production"
+    ManagedBy   = "terraform"
   }
 }

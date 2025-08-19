@@ -1,7 +1,7 @@
 # LoadBalancer outputs
 output "loadbalancer_ip" {
   description = "LoadBalancer external IP"
-  value       = module.nginx_ingress[0].loadbalancer_ip
+  value       = module.nginx_ingress.loadbalancer_ip
 }
 
 # Application URLs
@@ -13,12 +13,10 @@ output "application_urls" {
   }
 }
 
-
-
 # Storage classes
 output "storage_classes" {
   description = "Available storage classes"
-  value       = module.longhorn[0].storage_classes
+  value       = module.longhorn.storage_classes
 }
 
 # Monitoring access
