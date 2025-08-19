@@ -119,26 +119,6 @@ resource "helm_release" "prometheus" {
           }
         }
         
-        grafana.ini = {
-          server = {
-            root_url = "https://${var.monitoring_domain}"
-          }
-          security = {
-            disable_initial_admin_creation = false
-            admin_user = "admin"
-            admin_password = var.grafana_admin_password
-          }
-          auth = {
-            disable_login_form = false
-          }
-          "auth.anonymous" = {
-            enabled = false
-          }
-          smtp = {
-            enabled = false
-          }
-        }
-        
         dashboardProviders = {
           "dashboardproviders.yaml" = {
             apiVersion = 1
