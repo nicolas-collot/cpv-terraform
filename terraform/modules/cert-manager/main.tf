@@ -89,7 +89,7 @@ resource "helm_release" "cert_manager" {
 # Wait for cert-manager to be ready
 resource "time_sleep" "wait_for_cert_manager" {
   depends_on = [helm_release.cert_manager]
-  create_duration = "30s"
+  create_duration = "120s"
 }
 
 # Let's Encrypt Cluster Issuer
@@ -121,6 +121,10 @@ resource "kubernetes_manifest" "letsencrypt_issuer" {
       }
     }
   }
+  
+  timeouts {
+    create = "5m"
+  }
 }
 
 # Let's Encrypt Staging Issuer (for testing)
@@ -151,5 +155,9 @@ resource "kubernetes_manifest" "letsencrypt_staging_issuer" {
         ]
       }
     }
+  }
+  
+  timeouts {
+    create = "5m"
   }
 }

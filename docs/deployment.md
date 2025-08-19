@@ -182,6 +182,19 @@ Prometheus collects metrics from:
 
 ### Common Issues
 
+#### 0. Cert-Manager CRD Issues
+If you encounter errors like "No matches for kind 'ClusterIssuer' in 'certmanager.io'":
+1. **Wait for cert-manager to fully initialize** (can take 2-3 minutes)
+2. **Check cert-manager pods are running**:
+   ```bash
+   kubectl get pods -n cert-manager
+   ```
+3. **Verify CRDs are installed**:
+   ```bash
+   kubectl get crd | grep cert-manager
+   ```
+4. **If issues persist, re-run terraform apply** after a few minutes
+
 #### 1. Pods Not Starting
 ```bash
 # Check pod events
